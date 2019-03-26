@@ -1,0 +1,19 @@
+class Solution:
+    def solveNQueens(self, n):
+        def check(row, col, board):
+            for i in range(row):
+                if board[i]==col or abs(row-i)==abs(board[i]-col):
+                    return False
+            return True
+        def dfs(depth, board, value, solution):
+            if depth==n:
+                solution.append(value)
+            for col in range(n):
+                if check(depth, col, board):
+                    s = '.'*n
+                    board[depth] = col
+                    dfs(depth+1,board,value+[s[:col]+'Q'+s[col+1:]],solution)
+        board = [-1 for i in range(n)]
+        solution = []
+        dfs(0, board, [], solution)
+        return solution
