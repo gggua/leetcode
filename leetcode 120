@@ -1,0 +1,13 @@
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        ans = [0] * len(triangle)
+        ans[0] = triangle[0][0]
+        for angle in triangle[1:]:
+            for i in range(len(angle) - 1, -1, -1):
+                if i == 0:
+                    ans[i] = ans[i] + angle[i]
+                elif i == len(angle) - 1:
+                    ans[i] = ans[i - 1] + angle[i]
+                else:
+                    ans[i] = angle[i] + min(ans[i], ans[i - 1])
+        return min(ans[:len(triangle)])
