@@ -1,0 +1,16 @@
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        ans, length = [], len(s)
+        def isPalindrome(string):
+            if string == string[::-1]:
+                return True
+        def par(s, res):
+            if s =='':
+                ans.append(copy.deepcopy(res))
+            for i in range(1, len(s) + 1):
+                if isPalindrome(s[:i]):
+                    res.append(s[:i])
+                    par(s[i:], res)
+                    res.pop()
+        par(s, [])
+        return ans
