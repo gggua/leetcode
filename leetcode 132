@@ -1,0 +1,9 @@
+class Solution:
+    def minCut(self, s: str) -> int:
+        ans = [len(s) for i in range(len(s) + 1)]
+        ans[0] = -1
+        for i in range(len(s)):
+            for j in range(i + 1):
+                if s[j:i+1] == s[j:i+1][::-1]:
+                    ans[i+1] = min(ans[j]+1, ans[i+1])
+        return ans[-1]
