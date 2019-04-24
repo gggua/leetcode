@@ -1,0 +1,24 @@
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        ans = []
+        def wordBreak(s: str, wordDict: List[str]) -> bool:
+            dp = [0]
+            for i in range(len(s)+1):
+                for j in dp:
+                    if s[j:i] in wordDict and i not in dp:
+                        dp.append(i)
+            return dp[-1] == len(s)
+        if not wordBreak(s, wordDict):
+            return ans
+        def seperate(s, wordDict, res):
+            if s == '':
+                ans.append(' '.join(res))
+            for word in wordDict:
+                if s[:len(word)] == word:
+                    temp = copy.deepcopy(res)
+                    res.append(word)
+                    seperate(s[len(word):], wordDict, res)
+                    res = copy.deepcopy(temp)
+        seperate(s, wordDict, [])
+        return ans
+    
