@@ -1,0 +1,25 @@
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        signal = ['+', '-', '*', '/']
+        def calculate(num1, num2, i):
+            if i == '+':
+                return num1 + num2
+            elif i == '-':
+                return num1 - num2
+            elif i == '*':
+                return num1 * num2
+            else:
+                if num1*num2 < 0:
+                    return -(abs(num1)//abs(num2))
+                else:
+                    return num1 // num2
+        stack = []
+        for i in tokens:
+            if i not in signal:
+                stack.append(int(i))
+            else:
+                num2 = stack.pop()
+                num1 = stack.pop()
+                ans = calculate(num1, num2, i)
+                stack.append(ans)
+        return stack[0]
