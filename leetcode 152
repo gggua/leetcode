@@ -1,0 +1,10 @@
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+        imax, imin = [float('-inf')] * len(nums), [float('inf')] * len(nums)
+        imax[0], imin[0] = nums[0], nums[0]
+        for i in range(1, len(nums)):
+            imax[i] = max(imax[i-1] * nums[i], nums[i], imin[i-1] * nums[i])
+            imin[i] = min(imax[i-1] * nums[i], nums[i], imin[i-1] * nums[i])
+        return max(imax)
