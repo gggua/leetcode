@@ -1,0 +1,20 @@
+class Solution:
+    def largestNumber(self, nums: List[int]) -> str:
+        if not nums:
+            return
+        if not any(nums):
+            return '0'
+        ans = ''
+        def compare(num1, num2):
+            if str(num1) + str(num2) < str(num2) + str(num1):
+                return num2
+            else:
+                return num1
+        while len(nums) > 1:
+            maximum = nums[0]
+            for i in range(1, len(nums)):
+                maximum = compare(maximum, nums[i])
+            nums.remove(maximum)
+            ans += str(maximum)
+        ans += str(nums[0])
+        return ans
