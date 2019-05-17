@@ -1,0 +1,28 @@
+class Solution:
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        dic = {}
+        dic2 = {}
+        for i in range(len(s)):
+            if s[i] not in dic and t[i] not in dic2:
+                dic[s[i]] = t[i]
+                dic2[t[i]] = s[i]
+            elif dic.get(s[i]) != t[i] and dic.get(t[i]) != s[i]:
+                return False
+        return True
+##############################
+class Solution:
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        dic = {}
+        for i in range(len(s)):
+            if s[i] in dic:
+                if dic[s[i]] != t[i]:
+                    return False
+            else:
+                if t[i] in dic.values():
+                    return False
+            dic[s[i]] = t[i]
+        return True
