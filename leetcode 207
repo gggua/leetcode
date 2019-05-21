@@ -1,0 +1,22 @@
+class Solution:
+    def canFinish(self, numCourses, prerequisites):
+        if len(prerequisites) == 0:
+            return True
+        in_degrees = [0]*numCourses
+        adj = [set() for _ in range(numCourses)]
+        for second, first in prerequisites:
+            in_degrees[second] += 1
+            adj[first].add(second)
+        queue = []
+        for i in range(numCourses):
+            if in_degrees[i] == 0:
+                queue.append(i)
+        counter = 0
+        while queue:
+            course = queue.pop()
+            counter += 1
+            for i in adj[course]:
+                in_degrees[i] -= 1
+                if in_degrees[i] == 0:
+                    queue.append(i)
+        return counter == numCourses
