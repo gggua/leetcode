@@ -1,0 +1,20 @@
+class Solution:
+    def findOrder(self, numCourses, prerequisites):
+        courses = [set() for _ in range(numCourses)]
+        in_degrees = [0]*numCourses
+        for second, first in prerequisites:
+            in_degrees[second] += 1
+            courses[first].add(second)
+        queue = []
+        ans = []
+        for i in range(len(in_degrees)):
+            if in_degrees[i] == 0:
+                queue.append(i)
+        while queue:
+            temp = queue.pop()
+            ans.append(temp)
+            for i in courses[temp]:
+                in_degrees[i] -= 1
+                if in_degrees[i] == 0:
+                    queue.append(i)
+        return ans if len(ans) == numCourses else []
