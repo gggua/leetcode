@@ -1,0 +1,10 @@
+class Solution:
+    def shortestPalindrome(self, s: str) -> str:
+        if not s:
+            return ''
+        length = len(s)
+        temp = s[::-1]
+        for i in range(length, 0, -1):
+            if s[:i] == temp[length - i:]:
+                break
+        return temp[:length-i] + s
