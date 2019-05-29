@@ -1,0 +1,14 @@
+class Solution:
+    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        def dfs(times, target, nums, res, ans):
+            if target < 0:
+                return
+            if target == 0 and times == k:
+                ans.append(res)
+                return
+            for i in range(len(nums)):
+                dfs(times+1, target-nums[i], nums[i+1:], res+[nums[i]], ans)
+        nums = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        ans = []
+        dfs(0, n, nums, [], ans)
+        return ans
