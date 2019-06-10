@@ -1,0 +1,41 @@
+class Solution:
+    def calculate(self, s: str) -> int:
+        s = s.replace(' ', '')
+        stack = []
+        nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        res = ''
+        for i in s:
+            if i in nums:
+                res += i
+            elif i == ')':
+                if res:
+                    stack.append(int(res))
+                    res = ''
+                temp = stack.pop()
+                stack2 = []
+                while temp != '(':
+                    stack2.append(temp)
+                    temp = stack.pop()
+                stack.append(self.stack_cal(stack2))
+            else:
+                if res:
+                    stack.append(int(res))
+                    res = ''
+                stack.append(i)
+        if res:
+            stack.append(int(res))
+        return self.stack_cal(stack[::-1])
+        
+    def cal(self, num1, num2, signal):
+        if signal == '+':
+            return num1 + num2
+        if signal == '-':
+            return num1 - num2
+        
+    def stack_cal(self, stack):
+        while len(stack) > 1:
+            num1 = stack.pop()
+            signal = stack.pop()
+            num2 = stack.pop()
+            stack.append(self.cal(num1, num2, signal))
+        return stack[0]
