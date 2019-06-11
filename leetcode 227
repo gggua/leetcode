@@ -1,0 +1,71 @@
+class Solution:
+    def calculate(self, s: str) -> int:
+        stack = []
+        num = 0
+        symbol = '+'
+        for index, val in enumerate(s):
+            if val.isdigit():
+                num = 10 * num + int(val)
+            if val in '+-*/' or index == len(s) - 1:
+                if symbol == '+':
+                    stack.append(num)
+                elif symbol == '-':
+                    stack.append(-num)
+                elif symbol == '*':
+                    res = stack.pop()
+                    stack.append(res * num)
+                elif symbol == '/':
+                    res = stack.pop()
+                    if res < 0:
+                        stack.append(int(res/num))
+                    else:
+                        stack.append(res//num)
+                symbol = val
+                num = 0
+        return sum(stack)
+        
+##################################################################################
+
+class Solution:
+    def calculate(self, s: str) -> int:
+        nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        s = s.replace(' ', '')
+        s += '.'
+        stack = []
+        res = ''
+        mul_div = False
+        for i in s:
+            if i in nums:
+                res += i
+            else:
+                stack.append(int(res))
+                res = ''
+                if mul_div == True:
+                    num2 = stack.pop()
+                    signal = stack.pop()
+                    num1 = stack.pop()
+                    stack.append(self.cal(num1, num2, signal))
+                    mul_div = False
+                if i == '*' or i == '/':
+                    mul_div = True
+                stack.append(i)
+        stack = stack[:-1][::-1]
+        return self.stack_cal(stack)
+
+    def cal(self, num1, num2, signal):
+        if signal == '*':
+            return num1 * num2
+        if signal == '/':
+            return num1 // num2
+        if signal == '+':
+            return num1 + num2
+        if signal == '-':
+            return num1 - num2
+    
+    def stack_cal(self, stack):
+        while len(stack) > 1:
+            num1 = stack.pop()
+            signal = stack.pop()
+            num2 = stack.pop()
+            stack.append(self.cal(num1, num2, signal))
+        return stack[0] 
