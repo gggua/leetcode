@@ -1,0 +1,32 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if self.is_kid(root.left, p) and self.is_kid(root.left, q):
+            return self.lowestCommonAncestor(root.left, p, q)
+        elif self.is_kid(root.right, p) and self.is_kid(root.right, q):
+            return self.lowestCommonAncestor(root.right, p, q)
+        else:
+            return root
+    def is_kid(self, root, kid):
+        if not root:
+            return False
+        if root == kid:
+            return True
+        return any([self.is_kid(root.left, kid), self.is_kid(root.right, kid)])
+####################################################################################
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        return self.is_kid(root, p, q)
+    def is_kid(self, root, p, q):
+        if (root.val - p.val) * (root.val - q.val) <= 0:
+            return root
+        elif root.val < p.val and root.val < q.val:
+            return self.is_kid(root.right, p, q)
+        else:
+            return self.is_kid(root.left, p, q)
