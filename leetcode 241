@@ -1,0 +1,18 @@
+class Solution:
+    def diffWaysToCompute(self, strings: str) -> List[int]:
+        ans = []
+        for i in range(len(strings)):
+            if strings[i] in '+-*':
+                lefts = self.diffWaysToCompute(strings[:i])
+                rights = self.diffWaysToCompute(strings[i+1:])
+                for left in lefts:
+                    for right in rights:
+                        if strings[i] == '+':
+                            ans.append(left + right)
+                        if strings[i] == '-':
+                            ans.append(left - right)
+                        if strings[i] == '*':
+                            ans.append(left * right)
+        if not ans:
+            ans.append(int(strings))
+        return ans
