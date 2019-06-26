@@ -1,0 +1,16 @@
+class Solution:
+    def wordPattern(self, pattern: str, str: str) -> bool:
+        dic = {}
+        words = str.split(' ')
+        if len(words)!=len(pattern):
+            return False
+        for i in range(len(pattern)):
+            if pattern[i] not in dic.keys():
+                if words[i] not in dic.values():
+                    dic[pattern[i]] = words[i]
+                else:
+                    return False
+            if pattern[i] in dic.keys():
+                if dic[pattern[i]] != words[i]:
+                    return False
+        return True
