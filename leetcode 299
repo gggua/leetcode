@@ -1,0 +1,13 @@
+class Solution:
+    def getHint(self, secret: str, guess: str) -> str:
+        res1, res2 = [0]*10, [0]*10
+        cows, bulls = 0, 0
+        for i in range(len(secret)):
+            if secret[i] == guess[i]:
+                bulls += 1
+            else:
+                res1[ord(secret[i]) - ord('0')] += 1
+                res2[ord(guess[i]) - ord('0')] += 1
+        for i in range(10):
+            cows += min(res1[i], res2[i])
+        return '%sA%sB' % (bulls, cows)
