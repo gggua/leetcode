@@ -1,0 +1,24 @@
+class Solution:
+    def isAdditiveNumber(self, num: str) -> bool:
+        if len(num) <= 2:
+            return False
+        length = len(num)
+        for i in range(1, (length+1)//2):
+            for j in range(1, length-2*i+1):
+                num1, num2, sum_num = num[:i], num[i:i+j], num[i+j:]
+                if j > 1 and num2.startswith('0'):
+                    continue
+                if self.sum_true(num1, num2, sum_num):
+                    return True
+                if num1.startswith('0'):
+                    return False
+        return False
+    def sum_true(self, num1, num2, sum_num):
+        if not sum_num:
+            return True
+        sums = str(int(num1)+int(num2))
+        length = len(sums)
+        if sums == sum_num[:length]:
+            return self.sum_true(num2, sums, sum_num[length:])
+        else:
+            return False
