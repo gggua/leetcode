@@ -1,0 +1,24 @@
+class TreeNode:
+    def __init__(self, val):
+        self.left = None
+        self.right = None
+        self.val = val
+        self.count = 0
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        res = [0 for _ in range(len(nums))]
+        root = None
+        for i in reversed(range(len(nums))):
+            root = self.insertNode(root, nums[i], res, i)
+        return res
+    
+    def insertNode(self, root, val, res, index):
+        if root == None:
+            root = TreeNode(val)
+        elif val <= root.val:
+            root.count += 1
+            root.left = self.insertNode(root.left, val, res, index)
+        elif val > root.val:
+            res[index] += root.count + 1
+            root.right = self.insertNode(root.right, val, res, index)
+        return root
