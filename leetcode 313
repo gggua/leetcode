@@ -1,0 +1,12 @@
+class Solution:
+    def nthSuperUglyNumber(self, n: int, primes: List[int]) -> int:
+        idx = [0 for _ in range(len(primes))]
+        ans = [1]
+        if n == 1:
+            return ans[-1]
+        for i in range(1, n):
+            ans.append(min(primes[j]*ans[idx[j]] for j in range(len(primes))))
+            for index in range(len(idx)):
+                if ans[-1] == ans[idx[index]]*primes[index]:
+                    idx[index] += 1
+        return ans[-1]
