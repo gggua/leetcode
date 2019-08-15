@@ -18,3 +18,21 @@ class Solution:
                 fast = fast.next
         slow.next = fast
         return head
+#####################
+class Solution:
+    def partition(self, head: ListNode, x: int) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy1, dummy2 = ListNode(-1), ListNode(-2)
+        p, q = dummy1, dummy2
+        while head:
+            if head.val < x:
+                p.next = head
+                p = p.next
+            else:
+                q.next = head
+                q = q.next
+            head = head.next
+        p.next = dummy2.next
+        q.next = None
+        return dummy1.next
