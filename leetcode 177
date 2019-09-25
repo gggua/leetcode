@@ -1,0 +1,11 @@
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+  DECLARE a INT default n-1;
+  if (N<1)
+    THEN RETURN NULL;
+  ELSE RETURN (
+      # Write your MySQL query statement below.
+      select ifnull((select distinct Salary from Employee order by Salary DESC limit a,1),null)as getNthHighestSalary
+  );
+  END IF;
+END
