@@ -1,0 +1,43 @@
+class Solution:
+    def sortArray(self, nums: List[int]) -> List[int]:
+        self.heap_sort(nums)
+        return nums
+    def max_heap(self, nums, length, root):
+        left = 2*root + 1
+        right = left + 1
+        larger = root
+        if left < length and nums[left] > nums[larger]:
+            larger = left
+        if right < length and nums[right] > nums[larger]:
+            larger = right
+        if larger != root:
+            nums[larger], nums[root] = nums[root], nums[larger]
+            self.max_heap(nums, length, larger)
+    def heap_sort(self, nums):
+        for i in range(len(nums)//2-1, -1, -1):
+            self.max_heap(nums, len(nums), i)
+        for i in range(len(nums)-1, 0, -1):
+            nums[0], nums[i] = nums[i], nums[0]
+            self.max_heap(nums, i, 0)
+        return nums
+# class Solution:
+#     def sortArray(self, nums: List[int]) -> List[int]:
+#         self.quicksort(nums, 0, len(nums)-1)
+#         return nums
+#     def quicksort(self, nums, l, r):
+#         if l < r:
+#             res = self.partition(nums, l, r)
+#             self.quicksort(nums, l, res)
+#             self.quicksort(nums, res+1, r)
+#         return nums
+#     def partition(self, nums, l, r):
+#         temp = nums[l]
+#         while l < r:
+#             while l<r and nums[r]>=temp:
+#                 r -= 1
+#             nums[l] = nums[r]
+#             while l<r and nums[l]<=temp:
+#                 l += 1
+#             nums[r] = nums[l]
+#         nums[l] = temp
+#         return l
