@@ -1,0 +1,19 @@
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        return self.seperate(nums, 0, len(nums)-1, target)
+    def seperate(self, nums, left, right, target):
+        if left > right:
+            return -1
+        middle = (right - left)//2 + left
+        if nums[middle] == target:
+            return middle
+        if nums[middle] < nums[right]:
+            if nums[middle] < target and nums[right] >= target:
+                return self.seperate(nums, middle+1, right, target)
+            else:
+                return self.seperate(nums, left, middle-1, target)
+        else:
+            if nums[middle] > target and nums[left]<= target:
+                return self.seperate(nums, left, middle-1, target)
+            else:
+                return self.seperate(nums, middle+1, right, target)
