@@ -1,0 +1,23 @@
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        if not s:
+            return ''
+        if len(s) == 1:
+            return s
+        left, right, max_len = 0, 0, 0
+        dp = [[False for _ in range(len(s))] for _ in range(len(s))]
+        for i in range(len(s)):
+            dp[i][i] = True
+        for column in range(1, len(s)):
+            for row in range(0, column):
+                if s[row] == s[column]:
+                    if column - row < 3:
+                        dp[row][column] = True
+                    else:
+                        dp[row][column] = dp[row+1][column-1]
+                else:
+                    dp[row][column] = False
+                if dp[row][column] and max_len < (column-row+1):
+                    max_len = column - row + 1
+                    left, right = row, column
+        return s[left:right+1]
