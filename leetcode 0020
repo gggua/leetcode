@@ -1,0 +1,13 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        if not s:
+            return True
+        right = ['}', ']', ')']
+        dic = {'}':'{',']':'[',')':'('}
+        stack = []
+        for i in s:
+            if i not in right:
+                stack.append(i)
+            elif not stack or stack.pop() != dic[i]:
+                return False
+        return True if not stack else False
