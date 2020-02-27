@@ -1,0 +1,22 @@
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        self.heap_sort(nums)
+        return nums[k-1]
+    def max_heap(self, nums, length, root):
+        left = 2*root + 1
+        right = 2*root + 2
+        larger = root
+        if left < length and nums[left] < nums[larger]:
+            larger = left
+        if right< length and nums[right] < nums[larger]:
+            larger = right
+        if larger != root:
+            nums[larger], nums[root] = nums[root], nums[larger]
+            self.max_heap(nums, length, larger)
+    def heap_sort(self, nums):
+        for i in range(len(nums)//2, -1, -1):
+            self.max_heap(nums, len(nums), i)
+        for i in range(len(nums)-1, 0, -1):
+            nums[0], nums[i] = nums[i], nums[0]
+            self.max_heap(nums, i, 0)
+        return nums
