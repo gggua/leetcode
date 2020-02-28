@@ -3,22 +3,33 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        length = len(nums)
-        p1, p2 = 0, len(nums)-1
-        while p1<p2:
-            while p1<p2 and  nums[p1] == 0:
+        # length = len(nums)
+        # p1, p2 = 0, len(nums)-1
+        # while p1<p2:
+        #     while p1<p2 and  nums[p1] == 0:
+        #         p1 += 1
+        #     while p2>p1 and nums[p2] > 0:
+        #         p2 -= 1
+        #     nums[p1], nums[p2] = nums[p2], nums[p1]
+        #     p1 += 1
+        #     p2 -= 1
+        # p1, p2 =0, len(nums) -1
+        # while p1<p2:
+        #     while p1<p2 and  nums[p1] <2:
+        #         p1 += 1
+        #     while p2>p1 and nums[p2] > 1:
+        #         p2 -= 1
+        #     nums[p1], nums[p2] = nums[p2], nums[p1]
+        #     p1 += 1
+        #     p2 -= 1
+        p1, p2, cur = 0, len(nums)-1, 0
+        while cur <= p2:
+            if nums[cur] == 0:
+                nums[cur], nums[p1] = nums[p1], nums[cur]
+                cur += 1
                 p1 += 1
-            while p2>p1 and nums[p2] > 0:
+            elif nums[cur] == 2:
+                nums[cur], nums[p2] = nums[p2], nums[cur]
                 p2 -= 1
-            nums[p1], nums[p2] = nums[p2], nums[p1]
-            p1 += 1
-            p2 -= 1
-        p1, p2 =0, len(nums) -1
-        while p1<p2:
-            while p1<p2 and  nums[p1] <2:
-                p1 += 1
-            while p2>p1 and nums[p2] > 1:
-                p2 -= 1
-            nums[p1], nums[p2] = nums[p2], nums[p1]
-            p1 += 1
-            p2 -= 1
+            else:
+                cur += 1
